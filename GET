@@ -1,0 +1,97 @@
+primeravariable="" 
+segundavariable="" 
+
+def traeremail():
+import requests
+import json
+import jsonpath
+
+#--------------
+
+url="http://localhost:5000/api/v1/employees"
+
+response = requests.get(url)
+
+dataso=response.text
+
+json_response=json.loads(response.text)
+
+print(type(json_response))
+
+posicion_cero=json_response[0]
+
+print(posicion_cero["email"])
+
+primeravariable = posicion_cero["email"]
+
+
+
+
+""" url="http://localhost:5000/api/v1/employees"
+obj= {
+"first_name":"cas",
+"last_name":"asdsad",
+"email":"marico@caca.com",
+"phone":"123213",
+"organization":"tsoft",
+"designation":"asdasd",
+"salary":100,
+"status":1
+}
+
+response=requests.post(url, data=obj)
+
+print(response.status_code) """
+
+url="http://localhost:5000/api/v1/employees/30"
+obj= {
+"first_name":"Elisa",
+"last_name":"asdasd",
+"email":"qa@asdas.com",
+"phone":"123221313",
+"organization":"emergencias",
+"designation":"asdasd",
+"salary":3000000,
+"status":1
+}
+
+#response=requests.put(url,data=obj)
+
+def traerbasededatos():
+
+import pyodbc
+
+for driver in pyodbc.drivers():
+print(driver)
+#--------------------------------------------------------
+import mysql.connector
+import pandas as pd
+
+server = 'localhost'
+db = 'node_mysql_crud_db'
+usuario = 'root'
+contrasena = '123'
+
+try:
+mydb = mysql.connector.connect(
+host=server,
+user=usuario,
+password=contrasena,
+database=db
+)
+mycursor = mydb.cursor()
+mycursor.execute("SELECT * FROM employees")
+
+myresult = mycursor.fetchall()
+
+except:
+print("error al intentar conectarse")
+
+segundavariable=myresult[2][3]
+
+
+traeremail()
+traerbasededatos()
+
+if primeravariable == segundavariable:
+print("son iguales")
